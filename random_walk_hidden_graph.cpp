@@ -45,7 +45,7 @@ template <class Generator>
 void random_walk(Generator& random, int level)
 {
   assert(level >= 1);
-  size_t const one = 1;
+  size_t const one = 1;   // be care of the range overflow
   size_t const n = 2 * ((one << (level + 1)) - 1);
   size_t const dest = n - 1;
   size_t const left_start = (one << level) - 1;
