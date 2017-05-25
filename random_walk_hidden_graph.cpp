@@ -12,7 +12,7 @@ using namespace std;
          << " left child = " << l       \
          << " right child = " << r << endl
   #define PRINT(expr)                   \
-    cout << "DEBUG: " << #expr << " = " << expr
+    cout << "DEBUG: " << #expr << " = " << expr << endl
 #else
   #define PRINT_NODE(v, p, l, r)        (void)0
   #define PRINT(expr)                   (void)0
