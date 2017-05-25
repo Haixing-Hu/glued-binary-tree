@@ -11,8 +11,11 @@ using namespace std;
          << " parent = " << p           \
          << " left child = " << l       \
          << " right child = " << r << endl
+  #define PRINT(expr)                   \
+    cout << "DEBUG: " << #expr << " = " << expr
 #else
   #define PRINT_NODE(v, p, l, r)        (void)0
+  #define PRINT(expr)                   (void)0
 #endif
 
 template <class Generator>
@@ -49,9 +52,19 @@ void random_walk(Generator& random, int level)
   size_t const leaves = (1 << level);
   size_t const left_end = left_start + leaves - 1;
   size_t const right_end = right_start + leaves - 1;
+  PRINT(n);
+  PRINT(dest);
+  PRINT(leaves);
+  PRINT(left_start);
+  PRINT(left_end);
+  PRINT(right_start);
+  PRINT(right_end);
+
   size_t steps = 0;
   size_t current = 0;
   while (current != dest) {
+    PRINT(steps);
+    PRINT(current);
     size_t next;
     if (current == 0) {     // the start vertex
       next = random_choose(random, 1, 2);
@@ -81,8 +94,9 @@ void random_walk(Generator& random, int level)
       next = random_choose(random, parent, left_child, right_child);
       PRINT_NODE(current, parent, left_child, right_child);
     }
-    current = next;
+    PRINT(next);
     ++steps;
+    current = next;
   }
   cout << "Level of binary trees: " << level << endl;
   cout << "Total number of nodes: " << n << endl;
