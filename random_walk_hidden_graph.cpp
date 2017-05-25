@@ -45,11 +45,12 @@ template <class Generator>
 void random_walk(Generator& random, int level)
 {
   assert(level >= 1);
-  size_t const n = 2 * ((1 << (level + 1)) - 1);
+  size_t const one = 1;
+  size_t const n = 2 * ((one << (level + 1)) - 1);
   size_t const dest = n - 1;
-  size_t const left_start = (1 << level) - 1;
-  size_t const right_start = (1 << (level + 1)) - 1;
-  size_t const leaves = (1 << level);
+  size_t const left_start = (one << level) - 1;
+  size_t const right_start = (one << (level + 1)) - 1;
+  size_t const leaves = (one << level);
   size_t const left_end = left_start + leaves - 1;
   size_t const right_end = right_start + leaves - 1;
   PRINT(n);
@@ -63,8 +64,8 @@ void random_walk(Generator& random, int level)
   size_t steps = 0;
   size_t current = 0;
   while (current != dest) {
-    PRINT(steps);
-    PRINT(current);
+    // PRINT(steps);
+    // PRINT(current);
     size_t next;
     if (current == 0) {     // the start vertex
       next = random_choose(random, 1, 2);
@@ -73,28 +74,28 @@ void random_walk(Generator& random, int level)
       size_t const left_child = 2 * current + 1;
       size_t const right_child = left_child + 1;
       next = random_choose(random, parent, left_child, right_child);
-      PRINT_NODE(current, parent, left_child, right_child);
+      // PRINT_NODE(current, parent, left_child, right_child);
     } else if (current > right_start) {  // the middle vertex in the right tree
       size_t const parent = dest - (dest - current - 1) / 2;
       size_t const left_child = 2 * current - dest - 2;
       size_t const right_child = left_child + 1;
       next = random_choose(random, parent, left_child, right_child);
-      PRINT_NODE(current, parent, left_child, right_child);
+      // PRINT_NODE(current, parent, left_child, right_child);
     } else if ((current >= left_start) && (current <= left_end)) {  // the left leaves
       size_t const parent = (current - 1) / 2;
       size_t const left_child = right_start + (current - left_start);
       size_t const right_child = right_start + (current - left_start + 1) % leaves;
       next = random_choose(random, parent, left_child, right_child);
-      PRINT_NODE(current, parent, left_child, right_child);
+      // PRINT_NODE(current, parent, left_child, right_child);
     } else { // the right leaves
       assert((current >= right_start) && (current <= right_end));
       size_t const parent = dest - (dest - current - 1) / 2;
       size_t const left_child = left_start + (current - right_start - 1 + leaves) % leaves;
       size_t const right_child = left_start + (current - right_start);
       next = random_choose(random, parent, left_child, right_child);
-      PRINT_NODE(current, parent, left_child, right_child);
+      // PRINT_NODE(current, parent, left_child, right_child);
     }
-    PRINT(next);
+    // PRINT(next);
     ++steps;
     current = next;
   }
